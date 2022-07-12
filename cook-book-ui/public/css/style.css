@@ -1,4 +1,9 @@
 /********** Template CSS **********/
+
+body {
+    background-color: #0f172b;
+}
+
 :root {
     --primary: #FEA116;
     --light: #F1F8FF;
@@ -151,12 +156,12 @@
 
 
 /*** Hero Header ***/
-.hero-header {
+/* .hero-header {
     background: linear-gradient(rgba(15, 23, 43, .9), rgba(15, 23, 43, .9)), url(../img/bg-hero.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-}
+} */
 
 .hero-header img {
     animation: imgRotate 50s linear infinite;
