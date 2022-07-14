@@ -19,7 +19,7 @@ const Dashboard = () => {
           <div className="container-xxl py-5">
           <div className="row g-5 align-items-center">
               <div className="col-lg-6">
-                  <div class="row g-3">
+                  <div className="row g-3">
                       <div className="col-6 text-start">
                           <img className="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="./img/about-1.jpg" alt="about-img" />
                       </div>
