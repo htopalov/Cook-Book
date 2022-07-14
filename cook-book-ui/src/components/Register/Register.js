@@ -10,19 +10,19 @@ const Register = () => {
                             <div className="col-md-6">
                                 <div className="form-floating">
                                     <input type="text" className="form-control" id="username" placeholder="Username" required />
-                                    <label for="username">Username</label>
+                                    <label htmlFor="username">Username</label>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="form-floating">
                                     <input type="email" className="form-control" id="email" placeholder="Your Email" required />
-                                    <label for="email">Email</label>
+                                    <label htmlFor="email">Email</label>
                                 </div>
                             </div>
                             <div className="col-12">
                                 <div className="form-floating">
                                 <input type="password" className="form-control" id="password" placeholder="Password" required />
-                                    <label for="password">Password</label>
+                                    <label htmlFor="password">Password</label>
                                 </div>
                             </div>
                             <div className="col-12">

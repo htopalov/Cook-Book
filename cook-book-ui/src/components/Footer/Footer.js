@@ -5,7 +5,7 @@ const Footer = () => {
             <div className="copyright">
                 <div className="row">
                     <div className="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <p href="/">Cook Book &copy; {new Date().getFullYear()}</p>
+                        <p>Cook Book &copy; {new Date().getFullYear()}</p>
                     </div>
                 </div>
             </div>

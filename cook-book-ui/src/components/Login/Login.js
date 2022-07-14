@@ -10,13 +10,13 @@ const Login = () => {
                             <div className="col-md-6">
                                 <div className="form-floating">
                                     <input type="email" className="form-control" id="email" placeholder="example@mail.com" required />
-                                    <label for="email">Your Email</label>
+                                    <label htmlFor="email">Your Email</label>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="form-floating">
                                     <input type="password" className="form-control" id="password" placeholder="Your Password" required />
-                                    <label for="password">Your Password</label>
+                                    <label htmlFor="password">Your Password</label>
                                 </div>
                             </div>
                             <div className="col-12">
