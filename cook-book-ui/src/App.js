@@ -7,6 +7,7 @@ import RecipesList from "./components/Recipes/RecipesList";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Logout from "./components/Logout/Logout";
+import Create from "./components/Create/Create";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/sign-up" element={<Register/>}></Route>
         <Route path="/logout" element={<Logout/>}></Route>
         <Route path="/all" element={<RecipesList/>}></Route>
+        <Route path="/add" element={<Create/>}></Route>
       </Routes>
       <Footer />
     </div>
