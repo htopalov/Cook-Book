@@ -6,8 +6,10 @@ import Footer from "./components/Footer/Footer";
 import RecipesList from "./components/Recipes/RecipesList";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import Logout from "./components/Logout/Logout";
+// import Logout from "./components/Logout/Logout";
 import Create from "./components/Create/Create";
+import Recipe from "./components/Recipe/Recipe";
+import Edit from "./components/Edit/Edit";
 
 function App() {
   return (
@@ -17,9 +19,13 @@ function App() {
         <Route path="/" element={<Landing/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/sign-up" element={<Register/>}></Route>
-        <Route path="/logout" element={<Logout/>}></Route>
+        {/* <Route path="/logout" element={<Logout/>}></Route> */}
         <Route path="/all" element={<RecipesList/>}></Route>
+        <Route path="/my-recipes" element={<RecipesList/>}></Route>
+        <Route path="/favourite" element={<RecipesList/>}></Route>
         <Route path="/add" element={<Create/>}></Route>
+        <Route path="/recipe" element={<Recipe/>}></Route>
+        <Route path="/edit" element={<Edit/>}></Route>
       </Routes>
       <Footer />
     </div>
