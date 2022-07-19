@@ -27,9 +27,7 @@ namespace CookBook.Web.Data.Models
             ErrorMessage = UsernameMaxLengthExceeded)]
         public string Username { get; set; }
 
-        public byte[] PasswordHash { get; set; }
-
-        public byte[] PasswordSalt { get; set; }
+        public string PasswordHash { get; set; }
 
         public List<Recipe> UserRecipes { get; set; }
 

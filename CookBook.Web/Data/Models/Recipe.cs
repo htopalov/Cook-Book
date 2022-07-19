@@ -18,6 +18,11 @@ namespace CookBook.Web.Data.Models
         public Guid Id { get; set; }
 
         [Required]
+        [MaxLength(RecipeNameMaxLength, 
+            ErrorMessage = RecipeNameMaxLengthExceeded)]
+        public string Name { get; set; }
+
+        [Required]
         [MaxLength(RecipeDescriptionMaxLength,
             ErrorMessage = RecipeDescriptionLengthExceeded)]
         public string Description { get; set; }
