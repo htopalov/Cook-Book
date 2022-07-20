@@ -1,6 +1,8 @@
 using System.Reflection;
 using CookBook.Web.Common;
 using CookBook.Web.Data;
+using CookBook.Web.Middlewares.Token;
+using CookBook.Web.Services.Account;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +32,12 @@ builder
     .Services
     .AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
 
+//services injection
+builder
+    .Services
+    .AddScoped<IAccountService, AccountService>();
+
+
 builder
     .Services
     .Configure<RouteOptions>(opt =>
@@ -44,6 +52,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
+app.UseMiddleware<TokenMiddleware>();
 
 app.UseHttpsRedirection();
 
