@@ -22,11 +22,6 @@ namespace CookBook.Web.Data.Models
             ErrorMessage = EmailMaxLengthExceeded)]
         public string Email { get; set; }
 
-        [Required]
-        [MaxLength(UsernameMaxLength,
-            ErrorMessage = UsernameMaxLengthExceeded)]
-        public string Username { get; set; }
-
         public string PasswordHash { get; set; }
 
         public List<Recipe> UserRecipes { get; set; }

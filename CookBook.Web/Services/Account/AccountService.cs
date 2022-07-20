@@ -32,8 +32,7 @@ namespace CookBook.Web.Services.Account
         {
             var user = await this.dbContext
                 .Users
-                .FirstOrDefaultAsync(u => u.Email == request.Email 
-                                          || u.Username == request.Username);
+                .FirstOrDefaultAsync(u => u.Email == request.Email);
 
             if (user != null)
             {
@@ -97,7 +96,7 @@ namespace CookBook.Web.Services.Account
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("userId", user.Id.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
             };

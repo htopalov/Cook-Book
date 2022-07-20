@@ -45,6 +45,8 @@ builder
         opt.LowercaseUrls = true;
     });
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -56,7 +58,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors(x => x
     .AllowAnyOrigin()
     .AllowAnyMethod()
-    .AllowAnyHeader());
+    .AllowAnyHeader()
+    .WithOrigins("http://localhost:3000"));
 
 app.UseMiddleware<TokenMiddleware>();
 

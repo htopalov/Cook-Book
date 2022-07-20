@@ -52,8 +52,7 @@ namespace CookBook.Web.Middlewares.Token
                 }, out SecurityToken validatedToken);
 
                 var jwt = (JwtSecurityToken)validatedToken;
-                var userId = jwt.Claims.First(x=>x.Type == "userId").Value;
-
+                var userId = jwt.Claims.First(x=>x.Type == "id").Value;
                 context.Items["User"] = await accountService.GetUserAsync(userId);
 
             }
