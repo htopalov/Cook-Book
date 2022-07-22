@@ -1,7 +1,13 @@
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import * as recipeService from '../../services/recipeService.js';
+import { useAuthContext } from '../../contexts/AuthContext';
+import getBase64 from '../../services/getBase64.js';
 
 const Create = () => {
+    const { user } = useAuthContext();
+    const navigate = useNavigate();
+
     const [ingredient, setIngredient] = useState('');
     const [list, setList] = useState([]);
     
@@ -18,17 +24,32 @@ const Create = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         let formData = new FormData(e.currentTarget);
-        let recipe = {
-            'name': formData.get('recipe-name'),
-            'cookingTime': formData.get('time'),
-            'portions': formData.get('portions'),
-            'description': formData.get('description'),
-            'steps': formData.get('steps'),
-            'image': formData.get('image'),
-            'ingredients': list
-        };
 
-        console.log(recipe);
+        let name = formData.get('recipeName');
+        let cookingTime = formData.get('time');
+        let portions = formData.get('portions');
+        let description = formData.get('description');
+        let steps = formData.get('steps');
+        let imageFile = formData.get('image');
+        let ingredients = list.filter(x=> x !== '');
+     
+
+        getBase64(imageFile).then(
+              image => {
+              recipeService.create({
+              name,
+              cookingTime,
+              portions,
+              description,
+              steps,
+              image,
+              ingredients,
+              }, user.authToken, user.id)
+              .then(result => {
+                  navigate(`/details/${result.id}`);
+              })
+            }
+          );
     };
 
     return (
@@ -37,11 +58,11 @@ const Create = () => {
             <div className="col-md-6 bg-dark d-flex align-items-center">
                 <div className="p-5 wow fadeInUp" data-wow-delay="0.2s">
                     <h5 className="section-title ff-secondary text-start text-primary fw-normal mt-5 mb-5">Add New Recipe</h5>
-                    <form onSubmit={submitHandler}>
+                    <form method="POST" onSubmit={submitHandler}>
                         <div className="row g-3">
                             <div className="col-md-6">
                                 <div className="form-floating">
-                                    <input type="text" className="form-control" name='recipe-name' id="name" placeholder="Recipe name" />
+                                    <input type="text" className="form-control" name='recipeName' id="name" placeholder="Recipe name" />
                                     <label htmlFor="name">Recipe name</label>
                                 </div>
                             </div>

@@ -42,6 +42,8 @@ namespace CookBook.Web.Data.Models
         public Guid ImageId { get; set; }
         public Image Image { get; set; }
 
+        public Guid? UserId { get; set; }
+
         public List<Ingredient> IngredientsList { get; set; }
 
         public List<Like> Likes { get; set; }

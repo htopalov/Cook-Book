@@ -504,3 +504,7 @@ img {
 b, strong {
     font-weight: 700 !important;
 }
+
+.desc-container{
+    word-wrap: break-word;
+}

@@ -31,7 +31,7 @@ namespace CookBook.Web.Middlewares.Token
 
             if (token != null)
             {
-                AttachToContext(context, accountService, token);
+                await AttachToContext(context, accountService, token);
             }
 
             await this.next(context);

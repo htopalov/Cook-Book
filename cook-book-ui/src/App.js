@@ -8,7 +8,7 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Logout from "./components/Logout/Logout";
 import Create from "./components/Create/Create";
-import Recipe from "./components/Recipe/Recipe";
+import Details from "./components/Details/Details";
 import Edit from "./components/Edit/Edit";
 
 import { AuthProvider } from './contexts/AuthContext';
@@ -27,7 +27,7 @@ function App() {
         <Route path="/my-recipes" element={<RecipesList/>}></Route>
         <Route path="/favourite" element={<RecipesList/>}></Route>
         <Route path="/add" element={<Create/>}></Route>
-        <Route path="/recipe" element={<Recipe/>}></Route>
+        <Route path="/details/:id" element={<Details/>}></Route>
         <Route path="/edit" element={<Edit/>}></Route>
       </Routes>
       <Footer />

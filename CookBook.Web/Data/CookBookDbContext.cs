@@ -26,8 +26,13 @@ namespace CookBook.Web.Data
 
             builder.Entity<Recipe>()
                 .HasOne<User>()
-                .WithMany(x => x.UserRecipes)
+                .WithMany(x => x.Recipes)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Ingredient>()
+                .HasOne<Recipe>()
+                .WithMany(i => i.IngredientsList)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

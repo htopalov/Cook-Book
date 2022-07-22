@@ -8,7 +8,7 @@ namespace CookBook.Web.Data.Models
     {
         public User()
         {
-            this.UserRecipes = new List<Recipe>();
+            this.Recipes = new List<Recipe>();
             this.LikedRecipes = new List<Like>();
         }
 
@@ -24,7 +24,7 @@ namespace CookBook.Web.Data.Models
 
         public string PasswordHash { get; set; }
 
-        public List<Recipe> UserRecipes { get; set; }
+        public List<Recipe> Recipes { get; set; }
 
         public List<Like> LikedRecipes { get; set; }
     }
