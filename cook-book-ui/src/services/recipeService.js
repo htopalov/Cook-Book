@@ -9,10 +9,12 @@ export const create = async (recipe, authToken, userId) => {
         },
         body: JSON.stringify({...recipe, userId})
     });
-
-    let result = await response.json();
-
-    return result;
+    if (response.ok) {
+        let result = await response.json();
+        return result;
+    } else{
+        throw response.status;
+    }
 };
 
 export const getRecipe = async (recipeId, authToken) => {
