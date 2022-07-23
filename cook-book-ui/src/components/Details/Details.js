@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 const Details = () => {
     const[recipe, setRecipe] = useState({});
     const[ingredientsList, setIngredientsList] = useState([]);
+    const [isOwner, setIsOwner] = useState(false);
     const { user } = useAuthContext();
     const { id } = useParams();
 
@@ -15,9 +16,22 @@ const Details = () => {
             .then(r => {
                 setRecipe(r);
                 setIngredientsList(r.ingredientsList);
+                if (recipe.userId === user.Id) {
+                    setIsOwner(true);
+                } 
             })
     }, []);
 
+    let ownerBtns = (
+        <>
+        <Link to={`/edit/${id}`} id="btn-edit" className="btn btn-primary">Edit</Link>
+        <button id="btn-delete" className="btn btn-primary">Delete</button>
+        </>
+    );
+
+    let userBtn = (
+        <button id="btn-like" className="btn btn-primary">Like</button>
+    );
 
     return (
 <div className="container">
@@ -29,9 +43,10 @@ const Details = () => {
             </div>
             <div className="project-info-box">
                     <div id="recipe-options">
-                         <Link to="/edit" id="btn-edit" className="btn btn-primary">Edit</Link>
-                         <button id="btn-delete" className="btn btn-primary">Delete</button>
-                         <button id="btn-like" className="btn btn-primary">Like</button>
+                        { isOwner 
+                            ? ownerBtns
+                            : userBtn
+                        }         
                      </div>
             </div>
             <div className="project-info-box">
