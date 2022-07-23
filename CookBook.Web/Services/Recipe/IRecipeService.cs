@@ -7,5 +7,7 @@ namespace CookBook.Web.Services.Recipe
         Task<string> CreateRecipeAsync(RecipeRequest request);
 
         Task<RecipeResponse> GetRecipeAsync(Guid id);
+
+        Task<bool> DeleteRecipeAsync(Guid id);
     }
 }

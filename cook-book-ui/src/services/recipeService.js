@@ -30,3 +30,17 @@ export const getRecipe = async (recipeId, authToken) => {
         throw response.status;
     }
 };
+
+export const deleteRecipe = async(recipeId, authToken) => {
+    let response = await fetch(`${baseUrl}/api/recipe?id=${recipeId}`, {
+        method: 'DELETE',
+        headers: {
+            'AuthToken': authToken
+        }
+    });
+
+    if (response.status !== 204) {
+        let result = await response.json();
+        throw result; 
+    }
+}

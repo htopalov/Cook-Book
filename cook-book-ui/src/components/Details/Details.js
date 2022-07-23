@@ -1,4 +1,4 @@
-import {  useParams, Link } from 'react-router-dom';
+import {  useParams, Link, useNavigate } from 'react-router-dom';
 import * as recipeService from '../../services/recipeService';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useState, useEffect } from 'react';
@@ -10,6 +10,7 @@ const Details = () => {
     const [isOwner, setIsOwner] = useState(false);
     const { user } = useAuthContext();
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         recipeService.getRecipe(id, user.authToken)
@@ -22,10 +23,23 @@ const Details = () => {
             })
     }, []);
 
+    const deleteRecipeHandler = () => {
+        console.log(id);
+        recipeService.deleteRecipe(id, user.authToken)
+        .then(() => {
+            navigate('/all');
+        })
+        .catch(err => console.log(err)) // use notification
+        .finally(() => {
+            console.log('deleted'); // use notification
+        });
+        
+    };
+
     let ownerBtns = (
         <>
         <Link to={`/edit/${id}`} id="btn-edit" className="btn btn-primary">Edit</Link>
-        <button id="btn-delete" className="btn btn-primary">Delete</button>
+        <button onClick={deleteRecipeHandler} id="btn-delete" className="btn btn-primary">Delete</button>
         </>
     );
 

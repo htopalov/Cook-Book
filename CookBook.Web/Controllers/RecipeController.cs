@@ -44,5 +44,19 @@ namespace CookBook.Web.Controllers
 
             return Created(nameof(Details), new { id = result });
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await this.recipeService
+                .DeleteRecipeAsync(id);
+
+            if (!result)
+            {
+                return NotFound("Recipe does not exist");
+            }
+
+            return NoContent();
+        }
     }
 }

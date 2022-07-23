@@ -64,6 +64,27 @@ namespace CookBook.Web.Services.Recipe
             return string.Empty;
         }
 
+        public async Task<bool> DeleteRecipeAsync(Guid recipeId)
+        {
+            var recipe = await this.dbContex
+                .Recipes
+                .FindAsync(recipeId);
+
+            if (recipe == null)
+            {
+                return false;
+            }
+
+            this.dbContex
+                .Recipes
+                .Remove(recipe);
+
+            var result = await this.dbContex
+                .SaveChangesAsync();
+
+            return result > 0;
+        }
+
         private async Task<Image> ProcessImageRequest(IFormFile imageFromForm)
         {
             await using var memoryStream = new MemoryStream();
