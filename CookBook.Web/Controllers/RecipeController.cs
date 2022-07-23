@@ -17,7 +17,7 @@ namespace CookBook.Web.Controllers
             this.recipeService = recipeService;
         }
 
-        [HttpGet]
+        [HttpGet(nameof(Details))]
         public async Task<IActionResult> Details(Guid id)
         {
             var result = await this.recipeService
@@ -45,7 +45,7 @@ namespace CookBook.Web.Controllers
             return Created(nameof(Details), new { id = result });
         }
 
-        [HttpDelete]
+        [HttpDelete(nameof(Delete))]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await this.recipeService

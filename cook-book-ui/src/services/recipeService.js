@@ -17,7 +17,7 @@ export const create = async (recipe, authToken) => {
 };
 
 export const getRecipe = async (recipeId, authToken) => {
-    let response = await fetch(`${baseUrl}/api/recipe?id=${recipeId}`,{
+    let response = await fetch(`${baseUrl}/api/recipe/details?id=${recipeId}`,{
         method: 'GET',
         headers: {
             'AuthToken': authToken
@@ -32,7 +32,7 @@ export const getRecipe = async (recipeId, authToken) => {
 };
 
 export const deleteRecipe = async(recipeId, authToken) => {
-    let response = await fetch(`${baseUrl}/api/recipe?id=${recipeId}`, {
+    let response = await fetch(`${baseUrl}/api/recipe/delete?id=${recipeId}`, {
         method: 'DELETE',
         headers: {
             'AuthToken': authToken
