@@ -17,6 +17,12 @@ namespace CookBook.Web.Common
                 .ForMember(dest => dest.IngredientsList,
                     opt => opt.MapFrom(s => s.Ingredients.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => new Ingredient { NameAndQuantity = x }).ToList()));
 
+            this.CreateMap<RecipeEditRequest, Recipe>()
+                .ForMember(dest => dest.Image, opt => opt.Ignore())
+                .ForMember(dest => dest.PreparationSteps, opt => opt.MapFrom(s => s.Steps))
+                .ForMember(dest => dest.IngredientsList,
+                    opt => opt.MapFrom(s => s.Ingredients.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => new Ingredient { NameAndQuantity = x }).ToList()));
+
             this.CreateMap<Recipe, RecipeResponse>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(s => s.Id.ToString()))
                 .ForMember(dest => dest.IngredientsList,

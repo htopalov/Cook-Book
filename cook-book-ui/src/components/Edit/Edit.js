@@ -1,35 +1,60 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../contexts/AuthContext';
+import * as recipeService from '../../services/recipeService';
 
 const Edit = () => {
-    let recipe = {
-        'name': 'Zele s pile',
-        'cookingTime': 10,
-        'portions': 5,
-        'description': 'sdfsdfsdfsdfsdf',
-        'steps': 'sdfsdfsdfsdfsdsssssss',
-        'image': 'sdfsdfsdfsfsdfsdf',
-        'likes': 10, //no need here
-        'ingredients': ['zele','pile','podpravki']
-    };
-
+    const [recipe, setRecipe] = useState({});
+    const [list, setList] = useState([]);   
     const [ingredient, setIngredient] = useState('');
-    const [list, setList] = useState(recipe.ingredients);
+    const navigate = useNavigate();
+    let { id } = useParams();
+    let { user } = useAuthContext();
+
+    useEffect(() => {
+        recipeService.getRecipe(id, user.authToken)
+            .then(r => {
+                setRecipe(r);
+                setList(r.ingredientsList);
+            })
+    }, []);
 
 
     const submitHandler = (e) => {
         e.preventDefault();
         let formData = new FormData(e.currentTarget);
-        let recipe = {
-            'name': formData.get('recipe-name'),
-            'cookingTime': formData.get('time'),
-            'portions': formData.get('portions'),
-            'description': formData.get('description'),
-            'steps': formData.get('steps'),
-            'image': formData.get('image'),
-            'ingredients': list
+
+        let name = formData.get('recipeName');
+        let cookingTime = formData.get('time');
+        let portions = formData.get('portions');
+        let description = formData.get('description');
+        let steps = formData.get('steps');
+        let ingredients = list.filter(x=> x !== '');
+        let image = formData.get('image');
+        let userId = user.id;
+
+        let formSend = new FormData();
+        let data = {
+            name,
+            cookingTime,
+            portions,
+            description,
+            steps,
+            image,
+            ingredients,
+            userId
         };
 
-        console.log(recipe);
+        Object.keys(data).forEach(key => {
+            formSend.append(key,data[key]);
+        });
+
+        recipeService.updateRecipe(recipe.id, formSend, user.authToken)
+        .then(() => {
+            navigate(`/details/${recipe.id}`);
+        })
+        .catch(err => console.log(err));
+
     };
 
     const onClickAddHandler = (e) => {
@@ -46,7 +71,6 @@ const Edit = () => {
         setList(list => [...list].filter(x=> x!== ingredient));
     };
 
-
     return (
         <div className="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
         <div className="row g-0">
@@ -57,7 +81,7 @@ const Edit = () => {
                         <div className="row g-3">
                             <div className="col-md-6">
                                 <div className="form-floating">
-                                    <input type="text" className="form-control" name='recipe-name' id="name" placeholder="Recipe name" defaultValue={recipe.name}/>
+                                    <input type="text" className="form-control" name='recipeName' id="name" placeholder="Recipe name" defaultValue={recipe.name}/>
                                     <label htmlFor="name">Recipe name</label>
                                 </div>
                             </div>

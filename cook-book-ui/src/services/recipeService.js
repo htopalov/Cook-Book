@@ -43,4 +43,19 @@ export const deleteRecipe = async(recipeId, authToken) => {
         let result = await response.json();
         throw result; 
     }
-}
+};
+
+export const updateRecipe = async(recipeId, recipe, authToken) => {
+    let response = await fetch(`${baseUrl}/api/recipe/edit?id=${recipeId}`,{
+        method: 'PUT',
+        headers: {
+            'AuthToken': authToken
+        },
+        body: recipe
+    });
+
+    if (response.status !== 200) {
+        let result = await response.json();
+        throw result; 
+    }
+};

@@ -58,5 +58,19 @@ namespace CookBook.Web.Controllers
 
             return NoContent();
         }
+
+        [HttpPut(nameof(Edit))]
+        public async Task<IActionResult> Edit(Guid id, [FromForm]RecipeEditRequest request)
+        {
+            var result = await this.recipeService
+                .EditRecipeAsync(id, request);
+
+            if (!result)
+            {
+                return NotFound("Recipe not found");
+            }
+
+            return Ok();
+        }
     }
 }

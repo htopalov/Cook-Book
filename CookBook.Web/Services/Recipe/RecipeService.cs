@@ -85,6 +85,34 @@ namespace CookBook.Web.Services.Recipe
             return result > 0;
         }
 
+        public async Task<bool> EditRecipeAsync(Guid id, RecipeEditRequest request)
+        {
+            var recipe = await this.dbContex
+                .Recipes
+                .Include(r=>r.Image)
+                .Include(r=>r.IngredientsList)
+                .FirstOrDefaultAsync(r=> r.Id == id);
+
+            if (recipe == null)
+            {
+                return false;
+            }
+
+            this.mapper
+                .Map(request, recipe);
+
+            if (request.Image != null)
+            {
+                recipe.Image = await ProcessImageRequest(request.Image);
+            }
+
+            this.dbContex.Recipes.Update(recipe);
+
+            var updated = await dbContex.SaveChangesAsync();
+
+            return updated > 0;
+        }
+
         private async Task<Image> ProcessImageRequest(IFormFile imageFromForm)
         {
             await using var memoryStream = new MemoryStream();

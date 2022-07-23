@@ -28,7 +28,7 @@ function App() {
         <Route path="/favourite" element={<RecipesList/>}></Route>
         <Route path="/add" element={<Create/>}></Route>
         <Route path="/details/:id" element={<Details/>}></Route>
-        <Route path="/edit" element={<Edit/>}></Route>
+        <Route path="/edit/:id" element={<Edit/>}></Route>
       </Routes>
       <Footer />
     </div>
