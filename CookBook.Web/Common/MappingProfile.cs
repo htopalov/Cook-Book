@@ -1,5 +1,4 @@
-﻿using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using CookBook.Web.Data.Models;
 using CookBook.Web.DTOs.Recipe;
 using CookBook.Web.DTOs.User;

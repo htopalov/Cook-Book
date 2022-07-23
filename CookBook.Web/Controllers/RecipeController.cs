@@ -25,7 +25,7 @@ namespace CookBook.Web.Controllers
 
             if (result == null)
             {
-                return NotFound();
+                return NotFound("Recipe not found");
             }
 
             return Ok(result);
@@ -39,7 +39,7 @@ namespace CookBook.Web.Controllers
 
             if (string.IsNullOrEmpty(result))
             {
-                return BadRequest();
+                return BadRequest("Recipe name already exists");
             }
 
             return Created(nameof(Details), new { id = result });
