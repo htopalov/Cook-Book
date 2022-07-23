@@ -1,13 +1,12 @@
 const baseUrl = 'https://localhost:7001';
 
-export const create = async (recipe, authToken, userId) => {
+export const create = async (recipe, authToken) => {
     let response = await fetch(`${baseUrl}/api/recipe/create`, {
         method: 'POST',
         headers: {
-            'content-Type': 'application/json',
             'AuthToken': authToken,
         },
-        body: JSON.stringify({...recipe, userId})
+        body: recipe
     });
     if (response.ok) {
         let result = await response.json();

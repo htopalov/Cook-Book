@@ -1,9 +1,11 @@
 ﻿using CookBook.Web.DTOs.Recipe;
+using CookBook.Web.Filters;
 using CookBook.Web.Services.Recipe;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookBook.Web.Controllers
 {
+    [AuthToken]
     [Route("api/[controller]")]
     [ApiController]
     public class RecipeController : ControllerBase
@@ -30,7 +32,7 @@ namespace CookBook.Web.Controllers
         }
 
         [HttpPost(nameof(Create))]
-        public async Task<IActionResult> Create([FromBody]RecipeRequest request)
+        public async Task<IActionResult> Create([FromForm] RecipeRequest request)
         {
             var result = await this.recipeService
                 .CreateRecipeAsync(request);
@@ -40,7 +42,7 @@ namespace CookBook.Web.Controllers
                 return BadRequest();
             }
 
-            return Created(nameof(Details), new {id = result});
+            return Created(nameof(Details), new { id = result });
         }
     }
 }

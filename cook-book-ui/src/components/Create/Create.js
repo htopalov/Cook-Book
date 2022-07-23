@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as recipeService from '../../services/recipeService.js';
 import { useAuthContext } from '../../contexts/AuthContext';
-import getBase64 from '../../services/getBase64.js';
 
 const Create = () => {
     const { user } = useAuthContext();
@@ -30,26 +29,30 @@ const Create = () => {
         let portions = formData.get('portions');
         let description = formData.get('description');
         let steps = formData.get('steps');
-        let imageFile = formData.get('image');
         let ingredients = list.filter(x=> x !== '');
-     
+        let image = formData.get('image');
+        let userId = user.id;
 
-        getBase64(imageFile).then(
-              image => {
-              recipeService.create({
-              name,
-              cookingTime,
-              portions,
-              description,
-              steps,
-              image,
-              ingredients,
-              }, user.authToken, user.id)
-              .then(result => {
-                  navigate(`/details/${result.id}`);
-              })
-            }
-          );
+        let formSend = new FormData();
+        let data = {
+            name,
+            cookingTime,
+            portions,
+            description,
+            steps,
+            image,
+            ingredients,
+            userId
+        };
+
+        Object.keys(data).forEach(key => {
+            formSend.append(key,data[key]);
+        });
+
+        recipeService.create(formSend, user.authToken)
+        .then(result => {
+            navigate(`/details/${result.id}`);
+        });
     };
 
     return (

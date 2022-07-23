@@ -48,6 +48,8 @@ namespace CookBook.Web.Services.Recipe
             recipe = this.mapper
                 .Map<Data.Models.Recipe>(request);
 
+            recipe.Image = await ProcessImageRequest(request.Image);
+
             await this.dbContex
                 .AddAsync(recipe);
 
@@ -60,6 +62,13 @@ namespace CookBook.Web.Services.Recipe
             }
 
             return string.Empty;
+        }
+
+        private async Task<Image> ProcessImageRequest(IFormFile imageFromForm)
+        {
+            await using var memoryStream = new MemoryStream();
+            await imageFromForm.CopyToAsync(memoryStream);
+            return new Image { DataBytes = memoryStream.ToArray() };
         }
     }
 }

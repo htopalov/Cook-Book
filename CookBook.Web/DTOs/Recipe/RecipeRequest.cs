@@ -35,10 +35,10 @@ namespace CookBook.Web.DTOs.Recipe
             ErrorMessage = RecipePreparationStepsLengthExceeded)]
         public string Steps { get; set; }
 
-        public string[] Ingredients { get; set; }
+        public string Ingredients { get; set; }
 
         [Required]
-        public string Image { get; set; }
+        public IFormFile Image { get; set; }
 
         public string UserId { get; set; }
 
