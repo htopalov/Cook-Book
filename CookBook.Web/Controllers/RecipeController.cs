@@ -72,5 +72,14 @@ namespace CookBook.Web.Controllers
 
             return Ok();
         }
+
+        [HttpGet(nameof(All))]
+        public async Task<IActionResult> All(string? userId = null)
+        {
+            var result = await this.recipeService
+                .GetRecipesAsync(userId);
+
+            return Ok(result);
+        }
     }
 }

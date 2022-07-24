@@ -1,6 +1,29 @@
 import RecipeCard from "./RecipeCard";
+import * as recipeService from '../../services/recipeService';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { useState, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 
-const Recipes = (data) => {
+const RecipesList = () => {
+    const location = useLocation();
+    const path = location.pathname;
+    const[recipeList, setRecipeList] = useState([]);
+    const { user } = useAuthContext();
+
+    useEffect(() => {
+        if (path === '/all') {
+            recipeService.getAll(user.authToken)
+            .then(res => {
+                setRecipeList(res);       
+            });
+        } else {
+            recipeService.getMyRecipes(user.id, user.authToken)
+            .then(res => {
+                setRecipeList(res);
+            })
+        }
+    }, [path]);
+
     return (
         <div className="container-xxl py-5">
         <div className="container">
@@ -11,7 +34,7 @@ const Recipes = (data) => {
                 <div className="tab-content">
                     <div id="tab-1" className="tab-pane fade show p-0 active">
                         <div className="row g-4">
-                         {data.map(x => <RecipeCard key={x._id} recipe={x} />)}
+                            {recipeList.map(x => <RecipeCard key={x.id} recipe={x} />)}
                         </div>
                     </div>
                 </div>
@@ -21,4 +44,4 @@ const Recipes = (data) => {
     );
 }
 
-export default Recipes;
+export default RecipesList;

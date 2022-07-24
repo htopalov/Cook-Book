@@ -59,3 +59,35 @@ export const updateRecipe = async(recipeId, recipe, authToken) => {
         throw result; 
     }
 };
+
+export const getAll = async(authToken) => {
+    let response = await fetch(`${baseUrl}/api/recipe/all`,{
+        method: 'GET',
+        headers: {
+            'AuthToken': authToken
+        }
+    });
+
+    if (response.ok) {
+        let result = await response.json();
+        return result;
+    } else {
+        throw response.status;
+    }
+};
+
+export const getMyRecipes = async(userId, authToken) =>{
+    let response = await fetch(`${baseUrl}/api/recipe/all?userId=${userId}`,{
+        method: 'GET',
+        headers: {
+            'AuthToken': authToken
+        } 
+    });
+
+    if (response.ok) {
+        let result = await response.json();
+        return result;
+    } else {
+        throw response.status;
+    }
+}

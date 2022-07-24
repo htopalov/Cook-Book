@@ -113,6 +113,32 @@ namespace CookBook.Web.Services.Recipe
             return updated > 0;
         }
 
+        public async Task<List<RecipeResponse>> GetRecipesAsync(string? userId = null)
+        {
+            //var recipes = await this.dbContex
+            //    .Recipes
+            //    .Include(r=>r.Image)
+            //    .Include(r=>r.IngredientsList)
+            //    .Include(r=>r.Likes)
+            //    .Take(10)
+            //    .ToListAsync();
+
+            var queryableRecipes = this.dbContex.Recipes.AsQueryable();
+            if (!string.IsNullOrEmpty(userId))
+            {
+                queryableRecipes = queryableRecipes.Where(r => r.UserId.ToString() == userId);
+            }
+
+            var recipes = await queryableRecipes
+                .Include(r => r.Image)
+                .Include(r => r.IngredientsList)
+                .Include(r => r.Likes)
+                .Take(5)
+                .ToListAsync();
+
+            return this.mapper.Map<List<RecipeResponse>>(recipes);
+        }
+
         private async Task<Image> ProcessImageRequest(IFormFile imageFromForm)
         {
             await using var memoryStream = new MemoryStream();

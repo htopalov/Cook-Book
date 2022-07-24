@@ -11,5 +11,7 @@ namespace CookBook.Web.Services.Recipe
         Task<bool> DeleteRecipeAsync(Guid id);
 
         Task<bool> EditRecipeAsync(Guid id, RecipeEditRequest request);
+
+        Task<List<RecipeResponse>> GetRecipesAsync(string? userId = null);
     }
 }

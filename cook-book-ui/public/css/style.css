@@ -508,3 +508,19 @@ b, strong {
 .desc-container{
     word-wrap: break-word;
 }
+
+.rec-desc{
+    word-wrap: break-word;
+}
+
+.small-img{
+    margin-top: unset;
+}
+
+.card-holder{
+    margin-right: 100px;
+}
+
+.recipe-name {
+    word-wrap: break-word;
+}

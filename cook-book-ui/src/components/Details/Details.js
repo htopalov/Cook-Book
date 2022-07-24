@@ -52,7 +52,7 @@ const Details = () => {
     <div className="row">
         <div className="col-md-5 p-5 wow fadeInUp" data-wow-delay="0.2s">           
             <div className="project-info-box mt-5">
-                <h1 className="ff-secondary text-primary fw-normal mt-5 mb-3">{recipe.name}</h1>
+                <h1 className="ff-secondary text-primary fw-normal mt-5 mb-3 recipe-name">{recipe.name}</h1>
                 <p className="mb-0 desc-container">{recipe.steps}</p>
             </div>
             <div className="project-info-box">

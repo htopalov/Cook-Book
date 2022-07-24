@@ -1,5 +1,6 @@
-import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import { AuthProvider } from './contexts/AuthContext';
 import Navbar from "./components/Navbar/Navbar";
 import Landing from "./components/Landing/Landing";
 import Footer from "./components/Footer/Footer";
@@ -10,8 +11,6 @@ import Logout from "./components/Logout/Logout";
 import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
 import Edit from "./components/Edit/Edit";
-
-import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   return (
