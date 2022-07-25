@@ -153,6 +153,19 @@ namespace CookBook.Web.Services.Recipe
             };
         }
 
+        public async Task<List<RecipeGuestResponse>> GetGuestRecipesAsync()
+        {
+            var recipes = await this.dbContex
+                .Recipes
+                .Include(r=>r.Image)
+                .OrderByDescending(r=>r.CookingTime)
+                .ThenBy(r=>r.Name)
+                .Take(4)
+                .ToListAsync();
+
+            return this.mapper.Map<List<RecipeGuestResponse>>(recipes);
+        }
+
         private async Task<Image> ProcessImageRequest(IFormFile imageFromForm)
         {
             await using var memoryStream = new MemoryStream();

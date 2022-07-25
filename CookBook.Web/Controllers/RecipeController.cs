@@ -1,6 +1,7 @@
 ﻿using CookBook.Web.DTOs.Recipe;
 using CookBook.Web.Filters;
 using CookBook.Web.Services.Recipe;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookBook.Web.Controllers
@@ -16,6 +17,7 @@ namespace CookBook.Web.Controllers
             this.recipeService = recipeService;
         }
 
+        [AllowAnonymous]
         [HttpGet(nameof(Details))]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -84,6 +86,16 @@ namespace CookBook.Web.Controllers
                     request.UserId,
                     request.RecipesPerPage,
                     request.CurrentPage);
+
+            return Ok(result);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("guest")]
+        public async Task<IActionResult> GetGuestRecipes()
+        {
+            var result = await this.recipeService
+                .GetGuestRecipesAsync();
 
             return Ok(result);
         }

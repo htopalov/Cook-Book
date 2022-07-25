@@ -94,4 +94,14 @@ export const getMyRecipes = async(recipesRequest, authToken) =>{
     } else {
         throw response.status;
     }
-}
+};
+
+export const getGuestRecipes = async() => {
+    let response = await fetch(`${baseUrl}/api/recipe/guest`);
+    if (response.ok) {
+        let result = await response.json();
+        return result;
+    } else {
+        throw response.status;
+    }
+};

@@ -33,6 +33,9 @@ namespace CookBook.Web.Common
 
             this.CreateMap<Recipe,RecipeBase>()
                 .ForMember(dest=>dest.Image, opt => opt.MapFrom(s => $"data:image/jpg;base64,{Convert.ToBase64String(s.Image.DataBytes)}"));
+
+            this.CreateMap<Recipe, RecipeGuestResponse>()
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(s => $"data:image/jpg;base64,{Convert.ToBase64String(s.Image.DataBytes)}"));
         }
     }
 }

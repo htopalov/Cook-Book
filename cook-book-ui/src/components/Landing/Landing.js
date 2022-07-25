@@ -1,4 +1,28 @@
-const Dashboard = () => {
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import * as recipeService from '../../services/recipeService.js';
+
+const Landing = () => {
+    const[recipes,setRecipes] = useState([]);
+    useEffect(()=> {
+        recipeService.getGuestRecipes()
+        .then(res=>setRecipes(res))
+    },[]);
+
+    const guestRecipe = (recipe, index) =>{
+        return (
+        <div key={recipe.id} className="col-6 text-start">
+            <Link to={`/details/${recipe.id}`}>
+                  <img
+                      className={`img-fluid rounded ${index === 1 || index === 2 ? 'w-75' : 'w-100'} wow zoomIn guest-rec-img`}
+                      data-wow-delay="0.1s"
+                      src={recipe.image}
+                      alt="guest-recipe"/>
+            </Link>
+        </div>
+        );
+    };
+
     return (
         <>
         <div className="container-xxl py-5 bg-dark hero-header mb-5">
@@ -13,25 +37,14 @@ const Dashboard = () => {
                 </div>
             </div>
         </div>
-        
     </div>
       <div className="container">
           <div className="container-xxl py-5">
+          <h5 className="section-title ff-secondary text-start text-primary fw-normal">Check out some of the dishes</h5>
           <div className="row g-5 align-items-center">
               <div className="col-lg-6">
                   <div className="row g-3">
-                      <div className="col-6 text-start">
-                          <img className="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="./img/about-1.jpg" alt="about-img" />
-                      </div>
-                      <div className="col-6 text-start">
-                          <img className="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="./img/about-2.jpg" alt="about-img" />
-                      </div>
-                      <div className="col-6 text-end">
-                          <img className="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="./img/about-3.jpg" alt="about-img" />
-                      </div>
-                      <div className="col-6 text-end">
-                          <img className="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="./img/about-4.jpg" alt="about-img" />
-                      </div>
+                    {recipes.map((r, i)=> guestRecipe(r,i))}
                   </div>
               </div>
               <div className="col-lg-6">
@@ -46,4 +59,4 @@ const Dashboard = () => {
     );
 }
 
-export default Dashboard;
+export default Landing;
