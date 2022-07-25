@@ -17,14 +17,13 @@ const Details = () => {
             .then(r => {
                 setRecipe(r);
                 setIngredientsList(r.ingredientsList);
-                if (recipe.userId === user.Id) {
+                if (r.userId === user.Id) {
                     setIsOwner(true);
                 } 
             })
     }, []);
 
     const deleteRecipeHandler = () => {
-        console.log(id);
         recipeService.deleteRecipe(id, user.authToken)
         .then(() => {
             navigate('/all');
@@ -57,9 +56,11 @@ const Details = () => {
             </div>
             <div className="project-info-box">
                     <div id="recipe-options">
-                        { isOwner 
-                            ? ownerBtns
-                            : userBtn
+                        { user.id !== '' 
+                           ?
+                                isOwner ? ownerBtns : userBtn
+                           : 
+                                ''
                         }         
                      </div>
             </div>
