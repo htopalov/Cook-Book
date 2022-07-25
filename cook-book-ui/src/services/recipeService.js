@@ -60,12 +60,14 @@ export const updateRecipe = async(recipeId, recipe, authToken) => {
     }
 };
 
-export const getAll = async(authToken) => {
+export const getAll = async(recipesRequest,authToken) => {
     let response = await fetch(`${baseUrl}/api/recipe/all`,{
-        method: 'GET',
+        method: 'POST',
         headers: {
+            'content-type': 'application/json',
             'AuthToken': authToken
-        }
+        },
+        body: JSON.stringify(recipesRequest)
     });
 
     if (response.ok) {
@@ -76,12 +78,14 @@ export const getAll = async(authToken) => {
     }
 };
 
-export const getMyRecipes = async(userId, authToken) =>{
-    let response = await fetch(`${baseUrl}/api/recipe/all?userId=${userId}`,{
-        method: 'GET',
+export const getMyRecipes = async(recipesRequest, authToken) =>{
+    let response = await fetch(`${baseUrl}/api/recipe/all`,{
+        method: 'POST',
         headers: {
+            'content-type': 'application/json',
             'AuthToken': authToken
-        } 
+        },
+        body: JSON.stringify(recipesRequest)
     });
 
     if (response.ok) {

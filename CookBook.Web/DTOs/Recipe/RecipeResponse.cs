@@ -1,6 +1,6 @@
 ﻿namespace CookBook.Web.DTOs.Recipe
 {
-    public class RecipeResponse
+    public class RecipeResponse : IRecipeBase
     {
 
         public string Id { get; set; }

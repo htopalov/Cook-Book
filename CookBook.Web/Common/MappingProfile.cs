@@ -30,6 +30,9 @@ namespace CookBook.Web.Common
                 .ForMember(dest => dest.Steps, opt => opt.MapFrom(s => s.PreparationSteps))
                 .ForMember(dest=>dest.Likes, opt=>opt.MapFrom(s=>s.Likes.Count))
                 .ForMember(dest=>dest.Image, opt=>opt.MapFrom(s=> $"data:image/jpg;base64,{Convert.ToBase64String(s.Image.DataBytes)}"));
+
+            this.CreateMap<Recipe,RecipeBase>()
+                .ForMember(dest=>dest.Image, opt => opt.MapFrom(s => $"data:image/jpg;base64,{Convert.ToBase64String(s.Image.DataBytes)}"));
         }
     }
 }

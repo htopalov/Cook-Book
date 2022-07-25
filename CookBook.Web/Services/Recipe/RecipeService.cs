@@ -113,30 +113,44 @@ namespace CookBook.Web.Services.Recipe
             return updated > 0;
         }
 
-        public async Task<List<RecipeResponse>> GetRecipesAsync(string? userId = null)
+        public async Task<RecipeListModel> GetRecipesAsync(
+            string? userId = null,
+            int recipesPerPage = int.MaxValue,
+            int currentPage = 1)
         {
-            //var recipes = await this.dbContex
-            //    .Recipes
-            //    .Include(r=>r.Image)
-            //    .Include(r=>r.IngredientsList)
-            //    .Include(r=>r.Likes)
-            //    .Take(10)
-            //    .ToListAsync();
+            var queryableRecipes = this.dbContex
+                .Recipes
+                .AsQueryable();
 
-            var queryableRecipes = this.dbContex.Recipes.AsQueryable();
             if (!string.IsNullOrEmpty(userId))
             {
-                queryableRecipes = queryableRecipes.Where(r => r.UserId.ToString() == userId);
+                queryableRecipes = queryableRecipes
+                    .Where(r => r.UserId.ToString() == userId);
             }
 
             var recipes = await queryableRecipes
                 .Include(r => r.Image)
                 .Include(r => r.IngredientsList)
-                .Include(r => r.Likes)
-                .Take(5)
+                .OrderBy(r=>r.Name)
                 .ToListAsync();
 
-            return this.mapper.Map<List<RecipeResponse>>(recipes);
+            var totalRecipes = recipes.Count;
+
+            var pagedRecipes = recipes
+                .Skip((currentPage - 1) * recipesPerPage)
+                .Take(recipesPerPage)
+                .ToList();
+
+            var mappedAndPagedRecipeList = this.mapper
+                .Map<List<RecipeBase>>(pagedRecipes);
+
+            return new RecipeListModel
+            {
+                CurrentPage = currentPage,
+                TotalRecipes = totalRecipes,
+                Recipes = mappedAndPagedRecipeList,
+                UserId = userId
+            };
         }
 
         private async Task<Image> ProcessImageRequest(IFormFile imageFromForm)

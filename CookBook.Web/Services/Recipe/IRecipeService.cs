@@ -12,6 +12,9 @@ namespace CookBook.Web.Services.Recipe
 
         Task<bool> EditRecipeAsync(Guid id, RecipeEditRequest request);
 
-        Task<List<RecipeResponse>> GetRecipesAsync(string? userId = null);
+        Task<RecipeListModel> GetRecipesAsync(
+            string? userId = null,
+            int recipesPerPage = int.MaxValue,
+            int currentPage = 1);
     }
 }

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookBook.Web.Controllers
 {
-    [AuthToken]
     [Route("api/[controller]")]
     [ApiController]
     public class RecipeController : ControllerBase
@@ -31,6 +30,7 @@ namespace CookBook.Web.Controllers
             return Ok(result);
         }
 
+        [AuthToken]
         [HttpPost(nameof(Create))]
         public async Task<IActionResult> Create([FromForm] RecipeRequest request)
         {
@@ -45,6 +45,7 @@ namespace CookBook.Web.Controllers
             return Created(nameof(Details), new { id = result });
         }
 
+        [AuthToken]
         [HttpDelete(nameof(Delete))]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -59,6 +60,7 @@ namespace CookBook.Web.Controllers
             return NoContent();
         }
 
+        [AuthToken]
         [HttpPut(nameof(Edit))]
         public async Task<IActionResult> Edit(Guid id, [FromForm]RecipeEditRequest request)
         {
@@ -73,11 +75,15 @@ namespace CookBook.Web.Controllers
             return Ok();
         }
 
-        [HttpGet(nameof(All))]
-        public async Task<IActionResult> All(string? userId = null)
+        [AuthToken]
+        [HttpPost(nameof(All))]
+        public async Task<IActionResult> All([FromBody]RecipeListModel request)
         {
             var result = await this.recipeService
-                .GetRecipesAsync(userId);
+                .GetRecipesAsync(
+                    request.UserId,
+                    request.RecipesPerPage,
+                    request.CurrentPage);
 
             return Ok(result);
         }
