@@ -17,7 +17,7 @@ const Details = () => {
             .then(r => {
                 setRecipe(r);
                 setIngredientsList(r.ingredientsList);
-                if (r.userId === user.Id) {
+                if (r.userId === user.id) {
                     setIsOwner(true);
                 } 
             })

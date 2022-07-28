@@ -24,7 +24,7 @@ namespace CookBook.Web.Common
                     opt => opt.MapFrom(s => s.Ingredients.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => new Ingredient { NameAndQuantity = x }).ToList()));
 
             this.CreateMap<Recipe, RecipeResponse>()
-                .ForMember(dest => dest.UserId, opt => opt.MapFrom(s => s.Id.ToString()))
+                //.ForMember(dest => dest.UserId, opt => opt.MapFrom(s => s.Id.ToString()))
                 .ForMember(dest => dest.IngredientsList,
                     opt => opt.MapFrom(s => s.IngredientsList.Select(x => x.NameAndQuantity)))
                 .ForMember(dest => dest.Steps, opt => opt.MapFrom(s => s.PreparationSteps))

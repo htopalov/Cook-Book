@@ -65,7 +65,11 @@ const RecipesList = () => {
                 <div className="tab-content">
                     <div id="tab-1" className="tab-pane fade show p-0 active">
                         <div className="row g-4">
-                            {recipeList.map(x => <RecipeCard key={x.id} recipe={x} />)}
+                            {
+                                recipeList.length > 0
+                                ? recipeList.map(x => <RecipeCard key={x.id} recipe={x} />)
+                                : <p className="current-page">No recipes</p>
+                            }
                         </div>
                         <div className="d-flex justify-content-center mt-5">
                             { page > 1 ? previousBtn : '' }
