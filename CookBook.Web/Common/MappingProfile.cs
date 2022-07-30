@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CookBook.Web.Data.Models;
+using CookBook.Web.DTOs.Like;
 using CookBook.Web.DTOs.Recipe;
 using CookBook.Web.DTOs.User;
 
@@ -24,7 +25,6 @@ namespace CookBook.Web.Common
                     opt => opt.MapFrom(s => s.Ingredients.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => new Ingredient { NameAndQuantity = x }).ToList()));
 
             this.CreateMap<Recipe, RecipeResponse>()
-                //.ForMember(dest => dest.UserId, opt => opt.MapFrom(s => s.Id.ToString()))
                 .ForMember(dest => dest.IngredientsList,
                     opt => opt.MapFrom(s => s.IngredientsList.Select(x => x.NameAndQuantity)))
                 .ForMember(dest => dest.Steps, opt => opt.MapFrom(s => s.PreparationSteps))
@@ -36,6 +36,8 @@ namespace CookBook.Web.Common
 
             this.CreateMap<Recipe, RecipeGuestResponse>()
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(s => $"data:image/jpg;base64,{Convert.ToBase64String(s.Image.DataBytes)}"));
+
+            this.CreateMap<LikeRequest, Like>();
         }
     }
 }

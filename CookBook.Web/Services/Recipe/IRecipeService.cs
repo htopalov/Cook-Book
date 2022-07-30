@@ -18,5 +18,10 @@ namespace CookBook.Web.Services.Recipe
             int currentPage = 1);
 
         Task<List<RecipeGuestResponse>> GetGuestRecipesAsync();
+
+        Task<RecipeListModel?> GetFavoriteRecipesAsync(
+            string userId,
+            int recipesPerPage = int.MaxValue,
+            int currentPage = 1);
     }
 }

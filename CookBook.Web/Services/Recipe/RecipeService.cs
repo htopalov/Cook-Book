@@ -166,6 +166,47 @@ namespace CookBook.Web.Services.Recipe
             return this.mapper.Map<List<RecipeGuestResponse>>(recipes);
         }
 
+        public async Task<RecipeListModel?> GetFavoriteRecipesAsync(
+            string userId,
+            int recipesPerPage = int.MaxValue,
+            int currentPage = 1)
+        {
+            var currentUser = await this.dbContex
+                .Users
+                .Include(u=>u.LikedRecipes)
+                .ThenInclude(l=>l.Recipe)
+                .ThenInclude(r=>r.Image)
+                .FirstOrDefaultAsync(u=> u.Id.ToString() == userId);
+
+            if (currentUser == null)
+            {
+                return null;
+            }
+
+            var favoriteRecipes = currentUser
+                .LikedRecipes
+                .Select(l => l.Recipe)
+                .ToList();
+
+            var totalRecipes = favoriteRecipes.Count;
+
+            var pagedRecipes = favoriteRecipes
+                .Skip((currentPage - 1) * recipesPerPage)
+                .Take(recipesPerPage)
+                .ToList();
+
+            var mappedAndPagedRecipeList = this.mapper
+                .Map<List<RecipeBase>>(pagedRecipes);
+
+            return new RecipeListModel
+            {
+                CurrentPage = currentPage,
+                TotalRecipes = totalRecipes,
+                Recipes = mappedAndPagedRecipeList,
+                UserId = userId
+            };
+        }
+
         private async Task<Image> ProcessImageRequest(IFormFile imageFromForm)
         {
             await using var memoryStream = new MemoryStream();

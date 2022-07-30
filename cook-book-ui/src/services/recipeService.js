@@ -105,3 +105,21 @@ export const getGuestRecipes = async() => {
         throw response.status;
     }
 };
+
+export const getFavouriteRecipes = async (recipesRequest, authToken) => {
+    let response = await fetch(`${baseUrl}/api/recipe/favorite`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'AuthToken': authToken
+        },
+        body: JSON.stringify(recipesRequest)
+    });
+
+    if (response.ok) {
+        let result = await response.json()
+        return result;
+    } else {
+        throw response.status;
+    }
+};

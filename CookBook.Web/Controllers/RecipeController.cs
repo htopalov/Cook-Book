@@ -99,5 +99,18 @@ namespace CookBook.Web.Controllers
 
             return Ok(result);
         }
+
+        [AuthToken]
+        [HttpPost("favorite")]
+        public async Task<IActionResult> GetFavorite([FromBody]RecipeListModel request)
+        {
+            var result = await this.recipeService
+                .GetFavoriteRecipesAsync(
+                    request.UserId,
+                    request.RecipesPerPage,
+                    request.CurrentPage);
+
+            return Ok(result);
+        }
     }
 }

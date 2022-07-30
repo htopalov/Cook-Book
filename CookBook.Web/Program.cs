@@ -3,6 +3,7 @@ using CookBook.Web.Common;
 using CookBook.Web.Data;
 using CookBook.Web.Middlewares.Token;
 using CookBook.Web.Services.Account;
+using CookBook.Web.Services.Like;
 using CookBook.Web.Services.Recipe;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,9 @@ builder
     .Services
     .AddScoped<IRecipeService, RecipeService>();
 
+builder
+    .Services
+    .AddScoped<ILikeService, LikeService>();
 
 builder
     .Services

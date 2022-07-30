@@ -1,5 +1,6 @@
 import {  useParams, Link, useNavigate } from 'react-router-dom';
 import * as recipeService from '../../services/recipeService';
+import * as likeService from '../../services/likeService';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useState, useEffect } from 'react';
 
@@ -35,6 +36,12 @@ const Details = () => {
         
     };
 
+    const likeButtonHandler = () => {
+        likeService.addLike({userId: user.id, recipeId: recipe.id}, user.authToken)
+        .then(() => console.log('sdfsdfsd')); //need to change likes dynamically and remove button in details check for likes in like 
+        //table when loading recipe details
+    };
+
     let ownerBtns = (
         <>
         <Link to={`/edit/${id}`} id="btn-edit" className="btn btn-primary">Edit</Link>
@@ -43,7 +50,7 @@ const Details = () => {
     );
 
     let userBtn = (
-        <button id="btn-like" className="btn btn-primary">Like</button>
+        <button onClick={likeButtonHandler} id="btn-like" className="btn btn-primary">Like</button>
     );
 
     return (
