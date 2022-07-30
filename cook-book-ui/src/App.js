@@ -11,6 +11,7 @@ import Logout from "./components/Logout/Logout";
 import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
 import Edit from "./components/Edit/Edit";
+import Favorite from "./components/Favorite/Favorite";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         <Route path="/logout" element={<Logout/>}></Route>
         <Route path="/all" element={<RecipesList/>}></Route>
         <Route path="/my-recipes" element={<RecipesList/>}></Route>
-        <Route path="/favourite" element={<RecipesList/>}></Route>
+        <Route path="/favorite" element={<Favorite/>}></Route>
         <Route path="/add" element={<Create/>}></Route>
         <Route path="/details/:id" element={<Details/>}></Route>
         <Route path="/edit/:id" element={<Edit/>}></Route>

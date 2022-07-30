@@ -15,7 +15,7 @@ const Navbar = () => {
         <div id="user" className="navbar-nav ms-auto py-0 pe-4">
         <Link to="/all" className="nav-item nav-link">Recipes</Link>
         <Link to="/my-recipes" className="nav-item nav-link">My Recipes</Link>
-        <Link to="/favourite" className="nav-item nav-link">Favourite Recipes</Link>
+        <Link to="/favorite" className="nav-item nav-link">Favorite Recipes</Link>
         <Link to="/add" className="nav-item nav-link">Add Recipe</Link>
         <Link to="/logout" className="nav-item nav-link">Logout</Link>
     </div>
