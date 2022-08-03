@@ -9,6 +9,7 @@ const Details = () => {
     const[recipe, setRecipe] = useState({});
     const[ingredientsList, setIngredientsList] = useState([]);
     const [isOwner, setIsOwner] = useState(false);
+    const[hasLiked, setHasLiked] = useState(false);
     const { user } = useAuthContext();
     const { id } = useParams();
     const navigate = useNavigate();
@@ -21,6 +22,13 @@ const Details = () => {
                 if (r.userId === user.id) {
                     setIsOwner(true);
                 } 
+            });
+
+        likeService.checkLikes({recipeId: id, userId: user.id}, user.authToken)
+            .then((res)=> {
+                if (res) {
+                    setHasLiked(true);
+                }
             })
     }, []);
 
@@ -32,14 +40,16 @@ const Details = () => {
         .catch(err => console.log(err)) // use notification
         .finally(() => {
             console.log('deleted'); // use notification
-        });
-        
+        });      
     };
+    
 
-    const likeButtonHandler = () => {
+    const likeButtonHandler = (e) => {
+        e.target.remove();
         likeService.addLike({userId: user.id, recipeId: recipe.id}, user.authToken)
-        .then(() => console.log('sdfsdfsd')); //need to change likes dynamically and remove button in details check for likes in like 
-        //table when loading recipe details
+            .then(() => {
+                setRecipe(rec => ({...rec, likes: rec.likes + 1}));
+            });
     };
 
     let ownerBtns = (
@@ -50,7 +60,7 @@ const Details = () => {
     );
 
     let userBtn = (
-        <button onClick={likeButtonHandler} id="btn-like" className="btn btn-primary">Like</button>
+        <button onClick={likeButtonHandler} id="btn-like" className="btn btn-primary" disabled={hasLiked}>Like</button>
     );
 
     return (

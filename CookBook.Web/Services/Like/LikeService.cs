@@ -50,5 +50,21 @@ namespace CookBook.Web.Services.Like
 
             return result > 0;
         }
+
+        public async Task<bool> HasUserLikedRecipe(LikeRequest request)
+        {
+            var isLiked =
+                await this.dbContext
+                    .Likes
+                    .AnyAsync(l => l.RecipeId == request.RecipeId &&
+                                   l.UserId == request.UserId);
+
+            if (isLiked)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

@@ -28,5 +28,21 @@ namespace CookBook.Web.Controllers
 
             return NoContent();
         }
+
+        [HttpPost(nameof(HasLiked))]
+        public async Task<IActionResult> HasLiked(LikeRequest request)
+        {
+            var result = await this.likeService
+                .HasUserLikedRecipe(request);
+
+            if (result)
+            {
+                //return BadRequest();
+                return NoContent();
+            }
+
+            return Ok();
+        }
+
     }
 }
