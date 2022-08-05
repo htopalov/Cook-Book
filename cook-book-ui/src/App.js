@@ -12,6 +12,8 @@ import Create from "./components/Create/Create";
 import Details from "./components/Details/Details";
 import Edit from "./components/Edit/Edit";
 import Favorite from "./components/Favorite/Favorite";
+import PrivateRoute from "./components/Common/PrivateRoute";
+import GuardedRoute from "./components/Common/GuardedRoute";
 
 function App() {
   return (
@@ -23,12 +25,14 @@ function App() {
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/sign-up" element={<Register/>}></Route>
         <Route path="/logout" element={<Logout/>}></Route>
-        <Route path="/all" element={<RecipesList/>}></Route>
-        <Route path="/my-recipes" element={<RecipesList/>}></Route>
-        <Route path="/favorite" element={<Favorite/>}></Route>
-        <Route path="/add" element={<Create/>}></Route>
+        <Route path="/my-recipes" element={<PrivateRoute><RecipesList /></PrivateRoute>} />
+        <Route path="/favorite" element={<PrivateRoute><Favorite /></PrivateRoute>} />
         <Route path="/details/:id" element={<Details/>}></Route>
-        <Route path="/edit/:id" element={<Edit/>}></Route>
+        <Route element={<GuardedRoute />}>
+          <Route path="/all" element={<RecipesList/>}></Route>
+          <Route path="/add" element={<Create/>}></Route>
+          <Route path="/edit/:id" element={<Edit/>}></Route>
+        </Route>
       </Routes>
       <Footer />
     </div>

@@ -37,7 +37,6 @@ namespace CookBook.Web.Controllers
 
             if (result)
             {
-                //return BadRequest();
                 return NoContent();
             }
 
