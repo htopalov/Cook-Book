@@ -14,6 +14,7 @@ const RecipesList = () => {
     const[currentPage, setCurrentPage] = useState(initialPage);
     const[myRecipesCurrentPage, setMyRecipesCurrentPage] = useState(initialPage);
     const[maxPage, setMaxPage] = useState(initialPage);
+    const [isLoaded, setIsLoaded] = useState(false);
     const { user } = useAuthContext();
     const userId = user.id;
 
@@ -21,12 +22,14 @@ const RecipesList = () => {
         if (path === '/all') {
             recipeService.getAll({currentPage}, user.authToken)
             .then(res => {
+                setIsLoaded(true);
                 setRecipeList(res.recipes);
                 setMaxPage(Math.ceil(res.totalRecipes / recipesPerPage));
             });
         } else {
             recipeService.getMyRecipes({currentPage: myRecipesCurrentPage, userId}, user.authToken)
             .then(res => {
+                setIsLoaded(true);
                 setRecipeList(res.recipes);
                 setMaxPage(Math.ceil(res.totalRecipes / recipesPerPage));
             });
@@ -63,20 +66,24 @@ const RecipesList = () => {
             </div>
             <div className="tab-className text-center wow fadeInUp" data-wow-delay="0.1s">
                 <div className="tab-content">
-                    <div id="tab-1" className="tab-pane fade show p-0 active">
-                        <div className="row g-4">
-                            {
-                                recipeList.length > 0
-                                ? recipeList.map(x => <RecipeCard key={x.id} recipe={x} />)
-                                : <p className="current-page">No recipes</p>
-                            }
-                        </div>
-                        <div className="d-flex justify-content-center mt-5">
-                            { page > 1 ? previousBtn : '' }
-                                <span className="current-page">[{page}]</span>
-                            { page < maxPage ? nextBtn : '' }
-                        </div>
-                    </div>
+                    {!isLoaded 
+                        ? <div id="loader">Loading...</div>
+                        : 
+                           <div id="tab-1" className="tab-pane fade show p-0 active">
+                               <div className="row g-4">
+                                   {
+                                       recipeList.length > 0
+                                       ? recipeList.map(x => <RecipeCard key={x.id} recipe={x} />)
+                                       : <p className="current-page">No recipes</p>
+                                   }
+                               </div>
+                               <div className="d-flex justify-content-center mt-5">
+                                   { page > 1 ? previousBtn : '' }
+                                       <span className="current-page">[{page}]</span>
+                                   { page < maxPage ? nextBtn : '' }
+                               </div>
+                           </div>
+                    }
                 </div>
             </div>
         </div>

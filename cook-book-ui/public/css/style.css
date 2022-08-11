@@ -531,3 +531,11 @@ b, strong {
     font-size: larger;
     font-weight: bold;
 }
+
+#loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 150px;
+    padding-bottom: 400px;
+}

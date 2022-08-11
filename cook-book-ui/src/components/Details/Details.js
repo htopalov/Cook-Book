@@ -10,6 +10,7 @@ const Details = () => {
     const[ingredientsList, setIngredientsList] = useState([]);
     const [isOwner, setIsOwner] = useState(false);
     const[hasLiked, setHasLiked] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
     const { user } = useAuthContext();
     const { id } = useParams();
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Details = () => {
     useEffect(() => {
         recipeService.getRecipe(id, user.authToken)
             .then(r => {
+                setIsLoaded(true);
                 setRecipe(r);
                 setIngredientsList(r.ingredientsList);
                 if (r.userId === user.id) {
@@ -64,38 +66,42 @@ const Details = () => {
     );
 
     return (
-<div className="container">
-    <div className="row">
-        <div className="col-md-5 p-5 wow fadeInUp" data-wow-delay="0.2s">           
-            <div className="project-info-box mt-5">
-                <h1 className="ff-secondary text-primary fw-normal mt-5 mb-3 recipe-name">{recipe.name}</h1>
-                <p className="mb-0 desc-container">{recipe.steps}</p>
-            </div>
-            <div className="project-info-box">
-                    <div id="recipe-options">
-                        { user.id !== '' 
-                           ?
-                                isOwner ? ownerBtns : userBtn
-                           : 
-                                ''
-                        }         
-                     </div>
-            </div>
-            <div className="project-info-box">
-                <p><b>Likes:</b> {recipe.likes} likes</p>
-                <p><b>Cooking Time:</b> {recipe.cookingTime} min</p>
-                <p><b>Portions:</b> {recipe.portions}</p>
-                <p><b>Ingredients:</b></p>
-                <ul id="ingredients-list">
-                    {ingredientsList.map(x => {return <li className='text-primary' key={x}>{x}</li>})} 
-                </ul>
-            </div>
+        <div className="container">
+            {!isLoaded
+                ? <div id='loader'>Loading...</div>
+                :
+                  <div className="row">
+                          <div className="col-md-5 p-5 wow fadeInUp" data-wow-delay="0.2s">           
+                              <div className="project-info-box mt-5">
+                                  <h1 className="ff-secondary text-primary fw-normal mt-5 mb-3 recipe-name">{recipe.name}</h1>
+                                  <p className="mb-0 desc-container">{recipe.steps}</p>
+                              </div>
+                              <div className="project-info-box">
+                                      <div id="recipe-options">
+                                          { user.id !== '' 
+                                             ?
+                                                  isOwner ? ownerBtns : userBtn
+                                             : 
+                                                  ''
+                                          }         
+                                       </div>
+                              </div>
+                              <div className="project-info-box">
+                                  <p><b>Likes:</b> {recipe.likes} likes</p>
+                                  <p><b>Cooking Time:</b> {recipe.cookingTime} min</p>
+                                  <p><b>Portions:</b> {recipe.portions}</p>
+                                  <p><b>Ingredients:</b></p>
+                                  <ul id="ingredients-list">
+                                      {ingredientsList.map(x => {return <li className='text-primary' key={x}>{x}</li>})} 
+                                  </ul>
+                              </div>
+                          </div>
+                          <div className="col-md-7 mt-5 p-5 wow fadeInUp" data-wow-delay="0.2s">
+                              <img src={recipe.image} alt="" className="rounded"/>     
+                          </div>
+                  </div>
+            }
         </div>
-        <div className="col-md-7 mt-5 p-5 wow fadeInUp" data-wow-delay="0.2s">
-            <img src={recipe.image} alt="" className="rounded"/>
-        </div>
-    </div>
-</div>
     );
 }
 
